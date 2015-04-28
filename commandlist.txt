@@ -1,0 +1,3 @@
+echo omg this is a message
+wait 3000
+echo another message for testing
