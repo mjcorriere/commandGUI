@@ -1,6 +1,7 @@
 #ifndef COMMAND
 #define COMMAND
 
+#include <iostream>
 #include <QString>
 
 //TODO: Document.

@@ -18,7 +18,10 @@ public:
 
 private slots:
     void on_browseButton_clicked();
-    void on_pushButton_clicked();
+    void on_buildWaitButton_clicked();
+    void on_buildEchoButton_clicked();
+
+    void on_loadCommandsButton_clicked();
 
 private:
     Ui::CommandGUI *ui;

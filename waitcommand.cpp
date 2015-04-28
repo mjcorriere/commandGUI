@@ -7,6 +7,7 @@ void WaitCommand::parse(QString args) {
 
 void WaitCommand::execute() {
     //TODO: implement
+    std::cout << "Making you wait" << std::endl;
 }
 
 

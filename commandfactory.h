@@ -8,7 +8,7 @@ class CommandFactory {
 
 public:
     CommandFactory() {}
-    Command* buildCommand();
+    Command* buildCommand(std::string);
 
 private:
     std::map<QString, Command*> commandMap;
