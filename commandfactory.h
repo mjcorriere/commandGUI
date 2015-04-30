@@ -1,18 +1,13 @@
 #ifndef COMMANDFACTORY
 #define COMMANDFACTORY
 
-#include <map>
-#include "command.h"
+#include "icommand.h"
 
 class CommandFactory {
 
 public:
     CommandFactory() {}
-    Command* buildCommand(std::string);
-
-private:
-    std::map<QString, Command*> commandMap;
-
+    ICommand* buildCommand(QString);
 };
 
 #endif // COMMANDFACTORY

@@ -23,13 +23,13 @@ void CommandGUI::on_browseButton_clicked() {
 }
 
 void CommandGUI::on_buildWaitButton_clicked() {
-    Command* wc = commandFactory->buildCommand("wait");
+    ICommand* wc = commandFactory->buildCommand("wait");
     std::cout << "Command built" << std::endl;
     wc->execute();
 }
 
 void CommandGUI::on_buildEchoButton_clicked() {
-    Command* ec = commandFactory->buildCommand("echo");
+    ICommand* ec = commandFactory->buildCommand("echo");
     std::cout << "Command built" << std::endl;
     ec->execute();
 }
@@ -40,10 +40,27 @@ void CommandGUI::on_loadCommandsButton_clicked()
     commandsFile.open(QIODevice::ReadOnly);
 
     QTextStream commandStream(&commandsFile);
-    QString commands = commandStream.readAll();
+
+    while (!commandStream.atEnd()) {
+        QString line = commandStream.readLine();
+        commandQueue.enqueue(line);
+    }
+
     commandsFile.close();
 
-    ui->outputTextView->setPlainText(commands);
     ui->executeButton->setEnabled(true);
+}
 
+void CommandGUI::on_executeButton_clicked()
+{
+    while (!commandQueue.isEmpty()) {
+        QString commandString = commandQueue.dequeue();
+        QString commandName = commandString.split(" ").at(0);
+        ICommand *command = commandFactory->buildCommand(commandName);
+        command->parse(commandString);
+        QString output = command->execute();
+
+        ui->outputTextView->append(output);
+
+    }
 }

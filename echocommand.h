@@ -1,13 +1,13 @@
 #ifndef ECHOCOMMAND
 #define ECHOCOMMAND
 
-#include "command.h"
+#include "icommand.h"
 
-class EchoCommand : public Command {
+class EchoCommand : public ICommand {
 public:
     EchoCommand() { }
     void parse(QString args);
-    void execute();
+    QString execute();
 private:
     QString message;
 };

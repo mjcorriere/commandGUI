@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         commandgui.cpp \
     echocommand.cpp \
     waitcommand.cpp \
-    commandfactory.cpp
+    commandfactory.cpp \
+    boomcommand.cpp
 
 HEADERS  += commandgui.h \
-    command.h \
     commandfactory.h \
     echocommand.h \
-    waitcommand.h
+    waitcommand.h \
+    icommand.h \
+    boomcommand.h
 
 FORMS    += commandgui.ui

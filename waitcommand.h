@@ -1,14 +1,22 @@
 #ifndef WAITCOMMAND
 #define WAITCOMMAND
 
-#include "command.h"
+#include <QApplication>
+#include "icommand.h"
 
-class WaitCommand : public Command {
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
+
+class WaitCommand : public ICommand {
+
 public:
     WaitCommand() { }
     void parse(QString args);
-    void execute();
+    QString execute();
+
 private:
+    void sleep(int);
     int waitTime;
 };
 

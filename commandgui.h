@@ -2,6 +2,7 @@
 #define COMMANDGUI_H
 
 #include <QWidget>
+#include <QQueue>
 #include "commandfactory.h"
 
 namespace Ui {
@@ -23,9 +24,13 @@ private slots:
 
     void on_loadCommandsButton_clicked();
 
+    void on_executeButton_clicked();
+
 private:
     Ui::CommandGUI *ui;
     CommandFactory *commandFactory;
+    QQueue<QString> commandQueue;
+
 };
 
 #endif // COMMANDGUI_H

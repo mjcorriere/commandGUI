@@ -1,3 +1,5 @@
 echo omg this is a message
 wait 3000
 echo another message for testing
+echo another    wacky    and     wild message!!  5
+boom
