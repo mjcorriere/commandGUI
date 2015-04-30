@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QTextStream>
 
 #include "commandgui.h"
@@ -22,45 +23,50 @@ void CommandGUI::on_browseButton_clicked() {
     ui->fileNameText->setText(fileName);
 }
 
-void CommandGUI::on_buildWaitButton_clicked() {
-    ICommand* wc = commandFactory->buildCommand("wait");
-    std::cout << "Command built" << std::endl;
-    wc->execute();
-}
-
-void CommandGUI::on_buildEchoButton_clicked() {
-    ICommand* ec = commandFactory->buildCommand("echo");
-    std::cout << "Command built" << std::endl;
-    ec->execute();
-}
-
 void CommandGUI::on_loadCommandsButton_clicked()
 {
+    ui->outputTextView->clear();
+
     QFile commandsFile(ui->fileNameText->text());
-    commandsFile.open(QIODevice::ReadOnly);
 
-    QTextStream commandStream(&commandsFile);
+    if (commandsFile.open(QIODevice::ReadOnly)) {
 
-    while (!commandStream.atEnd()) {
-        QString line = commandStream.readLine();
-        commandQueue.enqueue(line);
+        QTextStream commandStream(&commandsFile);
+
+        while (!commandStream.atEnd()) {
+            QString line = commandStream.readLine();
+            commandQueue.enqueue(line);
+        }
+
+        commandsFile.close();
+
+        ui->executeButton->setEnabled(true);
+
+    } else {
+        QMessageBox messageBox;
+        messageBox.setText("Coule not open file.");
+        messageBox.exec();
     }
-
-    commandsFile.close();
-
-    ui->executeButton->setEnabled(true);
 }
 
 void CommandGUI::on_executeButton_clicked()
 {
     while (!commandQueue.isEmpty()) {
+
         QString commandString = commandQueue.dequeue();
         QString commandName = commandString.split(" ").at(0);
-        ICommand *command = commandFactory->buildCommand(commandName);
-        command->parse(commandString);
-        QString output = command->execute();
 
-        ui->outputTextView->append(output);
+        ICommand *command = commandFactory->buildCommand(commandName);
+
+        if (command != NULL) {
+            command->parse(commandString);
+            QString output = command->execute();
+
+            ui->outputTextView->append(output);
+        }
 
     }
+
+    ui->executeButton->setEnabled(false);
+
 }

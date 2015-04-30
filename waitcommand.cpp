@@ -7,6 +7,8 @@ void WaitCommand::parse(QString argString) {
 
 QString WaitCommand::execute() {
 
+    std::cout << "Making people wait" << std::endl;
+
     sleep(this->waitTime);
     QString output = "Waited for " + QString::number(this->waitTime) + " ms";
 
@@ -14,14 +16,17 @@ QString WaitCommand::execute() {
 }
 
 void WaitCommand::sleep(int ms) {
+
     if (ms > 0) {
-    #ifdef Q_OS_WIN
+        // Remind Qt to process the event queue before we nap
         QApplication::processEvents();
+    #ifdef Q_OS_WIN
         Sleep(uint(ms));
     #else
         nanosleep(null, null);
     #endif
     }
+
 }
 
 

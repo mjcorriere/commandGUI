@@ -15,7 +15,8 @@ ICommand* CommandFactory::buildCommand(QString commandType) {
         std::cout << "Building a new Boom Command" << std::endl;
         return new BoomCommand();
     } else {
-        std::cout << "I should probably throw an exception" << std::endl;
+        std::cout << "***Command " << commandType.toStdString() << " unknown.***" << std::endl;
+        return NULL;
     }
 
 }
